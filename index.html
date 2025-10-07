@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Discover Mabini, Batangas</title>
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+  <style>
+    :root {
+      --primary: #0077b6;
+      --secondary: #00b4d8;
+      --accent: #90e0ef;
+      --light: #68beb7;
+      --dark: #023e8a;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      line-height: 1.6;
+      color: #333;
+      scroll-behavior: smooth;
+      /* Beautiful background with overlay for readability */
+      background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.4&auto=format&fit=crop&w=1600&q=80');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      /* Overlay for better contrast and readability */
+      background-color: rgba(0, 0, 0, 0.3);
+      background-blend-mode: overlay;
+    }
+    /* Header */
+    header {
+      position: fixed; top: 0; width: 100%;
+      background: rgba(0,0,0,0.6); color: rgb(255, 255, 255);
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 15px 40px; z-index: 1000;
+    }
+    header .logo { font-size: 1.5rem; font-weight: 600; }
+    nav ul { list-style: none; display: flex; gap: 20px; }
+    nav ul li a { color: rgb(255, 255, 255); text-decoration: none; font-weight: 500; transition: color .3s; }
+    nav ul li a:hover { color: var(--accent); }
+
+    /* Hero */
+    .hero { position: relative; height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; color: rgb(0, 0, 0); }
+    .hero video { position: absolute; top:0; left:0; width:100%; height:100%; object-fit: cover; z-index:-1; filter: brightness(0.5); }
+    .hero-content { z-index:1; padding: 20px; max-width: 800px; }
+    .hero h1 { font-size: 3rem; text-shadow: 2px 2px 6px rgba(0,0,0,0.6); margin-bottom: 15px; }
+    .hero p { font-size: 1.3rem; margin: 15px 0 25px; }
+    .btn-group { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+    .btn { padding: 12px 25px; border: none; border-radius: 30px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-size: 1rem; }
+    .btn.primary { background: var(--secondary); color: rgb(14, 12, 110); }
+    .btn.primary:hover { background: var(--primary); }
+    .btn.secondary { background: transparent; border: 2px solid rgb(79, 45, 121); color: rgb(32, 50, 164); }
+    .btn.secondary:hover { background: rgb(92, 210, 63); color: var(--primary); }
+    .scroll-indicator { margin-top: 40px; font-size: 1.5rem; animation: bounce 1.8s infinite; }
+    @keyframes bounce { 0%,100%{transform:translateY(0);} 50%{transform:translateY(8px);} }
+
+    section { padding: 80px 40px; text-align: center; background-color: rgba(255, 255, 255, 0.8); border-radius: 10px; margin: 20px; }
+    section h2 { font-size: 2rem; margin-bottom: 40px; color: var(--dark); position: relative; display: inline-block; }
+    section h2::after { content: ''; width: 60px; height: 4px; background: var(--secondary); display: block; margin: 10px auto 0; border-radius: 2px; }
+
+    /* Attractions */
+    .swiper { width: 100%; padding-bottom: 50px; }
+    .swiper-slide { background: #fff; border-radius: 15px; overflow: hidden; box-shadow: 0 6px 15px rgba(0,0,0,0.1); transition: transform .3s; }
+    .swiper-slide:hover { transform: scale(1.03); }
+    .swiper-slide img { width: 100%; height: 220px; object-fit: cover; }
+    .swiper-slide h3 { margin: 15px; font-size: 1.2rem; }
+    .swiper-slide p { margin: 0 15px 20px; font-size: .95rem; }
+
+    /* Resorts */
+    .resort-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 20px; }
+    .resort-card { background: #fff; border-radius: 15px; overflow: hidden; box-shadow: 0 6px 15px rgba(0,0,0,0.1); transition: transform .3s; }
+    .resort-card:hover { transform: translateY(-8px); }
+    .resort-card img { width: 100%; height: 200px; object-fit: cover; }
+    .resort-card h3 { padding: 15px; font-size: 1.2rem; color: var(--primary); }
+    .resort-card p { padding: 0 15px 15px; }
+
+    /* Culture */
+    .culture-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(250px,1fr)); gap: 20px; }
+    .culture-card { background: #fff; border-radius: 15px; box-shadow: 0 6px 15px rgba(0,0,0,0.1); padding: 20px; transition: transform .3s; }
+    .culture-card:hover { transform: translateY(-8px); }
+    .culture-card img { width: 100%; border-radius: 12px; height: 200px; object-fit: cover; margin-bottom: 15px; }
+    .culture-card h3 { color: var(--primary); }
+
+    /* Contact */
+    .contact-form { max-width: 600px; margin: auto; }
+    .contact-form input, .contact-form textarea {
+      width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 8px; font-family: 'Poppins', sans-serif; }
+    .contact-form button { background: var(--primary); color: rgb(16, 15, 15); padding: 12px 25px; border: none; border-radius: 30px; cursor: pointer; transition: background .3s; font-size: 1rem; }
+    .contact-form button:hover { background: var(--secondary); }
+
+    /* Map */
+    .map iframe { border-radius: 15px; box-shadow: 0 6px 15px rgba(0,0,0,0.15); }
+
+    /* Footer */
+    footer { background: var(--dark); color: rgb(3, 1, 1); text-align: center; padding: 30px 20px; }
+    footer .social { margin-bottom: 15px; }
+    footer .social a { color: rgb(16, 5, 5); margin: 0 12px; font-size: 1.2rem; transition: color .3s; }
+    footer .social a:hover { color: var(--accent); }
+
+    /* Responsive */
+    @media(max-width:768px){
+      header { flex-direction: column; padding: 10px 20px; }
+      nav ul { flex-direction: column; align-items: center; }
+      .hero h1 { font-size: 2.2rem; }
+      section { padding: 60px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="logo">🌊 Mabini Tourism</div>
+    <nav>
+      <ul>
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#attractions">Attractions</a></li>
+        <li><a href="#resorts">Resorts</a></li>
+        <li><a href="#culture">Delicacies</a></li>
+        <li><a href="#map">Map</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" id="hero">
+    <video autoplay muted loop>
+      <source src="https://cdn.coverr.co/videos/coverr-sunset-on-the-beach-0575/1080p.mp4" type="video/mp4" />
+    </video>
+    <div class="hero-content">
+      <h1>Discover Mabini, Batangas</h1>
+      <p>Dive into adventure, culture, and paradise by the sea</p>
+      <div class="btn-group">
+        <a href="#attractions"><button class="btn primary">Explore Attractions</button></a>
+        <a href="#contact"><button class="btn secondary">Plan Your Visit</button></a>
+      </div>
+      <div class="scroll-indicator"><i class="fas fa-chevron-down"></i></div>
+    </div>
+  </section>
+
+  <!-- Attractions -->
+  <section id="attractions">
+    <h2>Top Attractions</h2>
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <img src="anilao diving.jpg" alt="Anilao Diving" />
+          <h3>Anilao Diving</h3>
+          <p>World-famous diving paradise with rich marine biodiversity.</p>
+        </div>
+        <div class="swiper-slide">
+          <img src="mt gulugod baboy.jpg" alt="Mt. Gulugod Baboy" />
+          <h3>Mt. Gulugod Baboy</h3>
+          <p>Enjoy a scenic hike with panoramic views of Batangas Bay.</p>
+        </div>
+        <div class="swiper-slide">
+          <img src="sombrero island.jpg" alt="Sombrero Island" />
+          <h3>Sombrero Island</h3>
+          <p>Relax on pristine beaches and enjoy island-hopping adventures.</p>
+        </div>
+      </div>
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+    </div>
+  </section>
+
+  <!-- Resorts -->
+  <section id="resorts">
+    <h2>Best Resorts in Mabini</h2>
+    <div class="resort-grid">
+      <div class="resort-card">
+        <img src="eagle2.jpg" alt="Eagle Point Resort" />
+        <h3>Eagle Point Resort</h3>
+        <p>A popular family resort with pools, cottages, and diving tours.</p>
+      </div>
+      <div class="resort-card">
+        <img src="planet dive.jpeg" alt="Planet Dive Resort" />
+        <h3>Planet Dive Resort</h3>
+        <p>Perfect for scuba diving enthusiasts with direct reef access.</p>
+      </div>
+      <div class="resort-card">
+        <img src="masasa.jpg" alt="Eagle Point Resort" />
+        <h3>Masasa Beach Resort</h3>
+        <p>A popular family resort with pools, cottages, and diving tours.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Culture & Food -->
+  <section id="culture">
+    <h2>Culture & Local Delicacies</h2>
+    <div class="culture-grid">
+      <div class="culture-card">
+        <img src="tawilis.jpg" alt="Tawilis" />
+        <h3>Tawilis</h3>
+        <p>Freshwater sardines unique to Batangas.</p>
+      </div>
+      <div class="culture-card">
+        <img src="bulalo.jpg" alt="Bulalo" />
+        <h3>Bulalo</h3>
+        <p>A hearty beef soup loved across Batangas.</p>
+      </div>
+      <div class="culture-card">
+        <img src="lomi.jpg" alt="Batangas Lomi" />
+        <h3>Batangas Lomi</h3>
+        <p>Thick egg noodles in a rich, savory broth.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Map -->
+  <section class="map" id="map">
+    <h2>📍 Find Us in Mabini, Batangas</h2>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7725.379508832293!2d120.9209256!3d13.7472255!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33bd08db8f6f7d5d%3A0x33b3a9f86f9a!2sMabini%2C%20Batangas!5e0!3m2!1sen!2sph!4v1694868723456!5m2!1sen!2sph" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <h2>Plan Your Visit</h2>
+    <form class="contact-form">
+      <input type="text" placeholder="Your Name" required />
+      <input type="email" placeholder="Your Email" required />
+      <textarea rows="5" placeholder="Your Message"></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="social">
+      <a href="#"><i class="fab fa-facebook"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+    </div>
+    <p>&copy; 2025 Mabini Tourism | Designed with LJ N. MARASIGAN</p>
+  </footer>
+
+  <!-- JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script>
+    var swiper = new Swiper(".mySwiper", {
+      slidesPerView: 1,
+      spaceBetween: 20,
+      loop: true,
+      pagination: { el: ".swiper-pagination", clickable: true },
+      navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+      breakpoints: { 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } }
+    });
+  </script>
+</body>
+</html>
